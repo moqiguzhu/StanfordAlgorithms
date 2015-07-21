@@ -1,29 +1,32 @@
 package algorithms.heap;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-//添加泛型支持
-//Java给的API中，优先队列的实现采用PriorityQueue，但是这个结构在删除队列中某个元素的时候是线性时间的
-//你必须要知道怎么初始化这个类才能使用它
-//明天继续，单元测试
-//AdvancedBinaryHeap<E, K>这才是正确的定义，但是泛型应该怎么写目前尚不清楚，学习相关的泛型知识
-//key信息使用Double数据来表示
-//各种异常都没有处理
-//index都不需要返回吧
-//因为采用Map存储数据，同一个元素在Heap中不能出现多次，不过，还是看你怎么用了
-public class AdvancedBinaryHeap<E> {
+/**
+ * @author moqiguzhu
+ *
+ * @param <E> E是堆中存储的真实数据的类型
+ * Java给的API中，优先队列的实现采用PriorityQueue，但是这个结构在删除队列中某个元素的时候是线性时间的。
+ * 于是我实现了这个类，这个heap类删除元素的时间是O(log(n))的，并且增加了动态修改元素key信息的功能。
+ * 堆中元素的信息是根据key信息来确定的。
+ * 这个类可以用来实现快速的Dijkstra算法和Prim MST算法
+ */
+//添加对key的泛型支持，类的正确定义应该是AdvancedBinaryHeap<E, K>
+//处理异常，强制类型转换报warning的地方需要修改
+//因为采用Map存储数据，这就要求堆中不能有两个完全一样的数据(缺陷？)
+//单元测试
+public class AdvancedBinaryHeap<E, K> {
     /*保存节点在heap中的位置信息*/
     private Map<E, Integer> element_index;
     /*heap的底层使用数组实现，节点使用一个整数来标识*/
     private List<E> data;
     /*保存节点的key信息，先后顺序是使用key来确定的*/
-    private Map<E, Double> element_key;
+    private Map<E, K> element_key;
     /*using MAX to initiate key values of nodes*/
     private double MAX = Double.MAX_VALUE;
     
@@ -31,7 +34,7 @@ public class AdvancedBinaryHeap<E> {
         element_index = new HashMap<E,Integer>();
         data = new ArrayList<E>();      
         data.add(null);                 //sentinel， 数组的第一个空间不使用，方便left和right函数的编写                   
-        element_key = new HashMap<E,Double>();
+        element_key = new HashMap<E,K>();
     }
     
     public AdvancedBinaryHeap() {
@@ -39,13 +42,14 @@ public class AdvancedBinaryHeap<E> {
         init();
     }
     
-    public AdvancedBinaryHeap(Collection<? extends E> c) {
+    public AdvancedBinaryHeap(List<? extends E> c, List<? extends K> k) {
         init();
-        int index = 1;
-        for(E element : c) {
-            data.add(element);
-            element_index.put(element, index++);        
-            element_key.put(element, MAX);		//使用默认值
+        E element;
+        for(int i = 0; i < c.size(); i++) {
+        	element = c.get(i);
+        	data.add(element);
+        	element_index.put(element, i+1);
+        	element_key.put(element, k.get(i));
         }
     }
     
@@ -53,7 +57,7 @@ public class AdvancedBinaryHeap<E> {
         element_index = new HashMap<E,Integer>();
         data = new ArrayList<E>(initialCapacity+1);      
         data.add(null);                 //sentinel， 数组的第一个空间不使用，方便left和right函数的编写                   
-        element_key = new HashMap<E,Double>();
+        element_key = new HashMap<E,K>();
     }
     
     //!!! to-do
@@ -61,32 +65,46 @@ public class AdvancedBinaryHeap<E> {
     	
     }
     
-    
+    public Map<E, K> getKeys() {
+        return element_key;
+    }
     
     //return the index of parent 
     public int parent(int index) {
-        return index/2;
+        return index / 2;
     }
     //return the index of left child
     public int left(int index) {
-        return 2*index;
+        return 2 * index;
     }
     //return the index of right child
     public int right(int index) {
-        return 2*index+1;
+        return 2 * index + 1;
     }
     
     public int size() {
         return data.size() - 1;
     }
     
-    public Map<E, Integer> getIndexes() {
-        return element_index;
-    }
-
-    public Map<E, Double> getKeys() {
-        return element_key;
-    }
+    public int compareKey(K k1, K k2) {
+    	//Cannot perform instanceof check against parameterized type Comparator<? super K>. 
+    	//Use the form Comparator<?> instead since further generic type information will 
+    	//be erased at runtime 
+    	int result = 0;
+		try {
+	    	if(k1 instanceof Comparator<?> && k2 instanceof Comparator<?>) {
+				Comparator<? super K> comparator = (Comparator<? super K>)k1;
+				result = comparator.compare(k1, k1);
+			} else if(k1 instanceof Comparable<?> && k2 instanceof Comparable<?>) {
+				result = ((Comparable<K>)k1).compareTo(k2);
+			} else {
+				//
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
+	}
     
     //逐级下降
     public void bubbleDown(E element) {
@@ -94,12 +112,12 @@ public class AdvancedBinaryHeap<E> {
         int l = left(index);
         int r = right(index);
         int min;
-        if(l < data.size() && element_key.get(data.get(l)) < element_key.get(data.get(index))) {
+        if(l < data.size() && compareKey(element_key.get(data.get(l)), element_key.get(data.get(index))) < 0) {
             min = l;
         } else {
             min = index;
         }
-        if(r < data.size() && element_key.get(data.get(r)) < element_key.get(data.get(min))) {
+        if(r < data.size() && compareKey(element_key.get(data.get(r)), element_key.get(data.get(min))) < 0) {
             min = r;
         }
         if(min != index) {
@@ -120,7 +138,7 @@ public class AdvancedBinaryHeap<E> {
         int parentIndex = parent(index);
         if(parentIndex >= 1) {
             E parentNode = data.get(parentIndex);
-            if(element_key.get(parentNode) > element_key.get(element)) {
+            if(compareKey(element_key.get(parentNode), element_key.get(element)) > 0) {
                 data.set(index, parentNode);
                 data.set(parentIndex, element);
                 element_index.put(parentNode, index);
@@ -135,13 +153,13 @@ public class AdvancedBinaryHeap<E> {
     }
     
 	//一般来说，在MST的实现中，newKey > key
-	public void setKey(E element, double newKey) {
-		double oldKey = element_key.get(element);
+	public void setKey(E element, K newKey) {
+		K oldKey = element_key.get(element);
 		element_key.put(element, newKey);
 		//逐级下降
-		if(newKey > oldKey) bubbleDown(element);
+		if(compareKey(newKey, oldKey) > 0) bubbleDown(element);
 		//逐级上升
-		if(newKey < oldKey) bubbleUp(element);
+		if(compareKey(newKey, oldKey) < 0) bubbleUp(element);
 	}
 	
 	//!!! to-do
@@ -153,12 +171,11 @@ public class AdvancedBinaryHeap<E> {
 		return element_key.containsKey((E)object);
 	}
 	
-	//!!! to-do
 	public Iterator<E> iterator() {
-		return null;
+		return data.subList(1, data.size()).iterator();
 	}
-	//这个key的命名太具有欺骗性了
-	public boolean offer(E element, double key) {
+	
+	public boolean offer(E element, K key) {
 		element_key.put(element, key);
 		bubbleUp(element);
 		return true;			//处理异常
@@ -198,10 +215,12 @@ public class AdvancedBinaryHeap<E> {
         data.remove(data.size()-1);
         element_index.remove(min);
         element_key.remove(min);
+        
         return elementAndkey;
     }
     
     public boolean remove(Object object) {
+    	//
     	E element = (E)object;
 		if(!contains(object)) {
 			return false;
@@ -210,9 +229,8 @@ public class AdvancedBinaryHeap<E> {
 			data.remove(index);
 			element_key.remove(element);
 			element_index.remove(element);
+			
 			return true;
 		}
 	}
-    
-    
 }
