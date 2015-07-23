@@ -21,7 +21,7 @@ public class Node {
 	public void setLabel(int label) {
 		this.label = label;
 	}
-
+ 
 	public double getDist() {
 		return dist;
 	}

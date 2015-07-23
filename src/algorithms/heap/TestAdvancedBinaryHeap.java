@@ -1,5 +1,7 @@
 package algorithms.heap;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -26,6 +28,10 @@ class Element {
 	public String toString() {
 		return "" + id;
 	}
+	
+	public int hashCode() {
+		return this.id * 21;
+	}
 }
 
 class Key implements Comparator<Key> {
@@ -47,6 +53,11 @@ class Key implements Comparator<Key> {
 		Key k1 = (Key)o1;
 		return k1.key == this.key;
 	}
+	
+	@Override
+	public int hashCode() {
+		return this.key * 21;
+	}
 }
 
 //单元测试也要写泛型？
@@ -62,18 +73,18 @@ public class TestAdvancedBinaryHeap {
 	@Test
 	public void testConstrutor() {
 		AdvancedBinaryHeap<Integer, Double> heap = new AdvancedBinaryHeap<Integer, Double>();
-		org.junit.Assert.assertNotNull("should not be null", heap.getData());
-		org.junit.Assert.assertNull("should be null", heap.getComparator());
-		org.junit.Assert.assertNotNull("should not be null", heap.getElement_index());
-		org.junit.Assert.assertNotNull("should not be null", heap.getElement_Keys());
-		org.junit.Assert.assertEquals("failure - int should be equal", 0, heap.size());	
+		assertNotNull("should not be null", heap.getData());
+		assertNull("should be null", heap.getComparator());
+		assertNotNull("should not be null", heap.getElement_index());
+		assertNotNull("should not be null", heap.getElement_Keys());
+		assertEquals("failure - int should be equal", 0, heap.size());	
 		
 		AdvancedBinaryHeap<Element, Key> heap1 = new AdvancedBinaryHeap<Element, Key>();
-		org.junit.Assert.assertNotNull("should not be null", heap.getData());
-		org.junit.Assert.assertNull("should be null", heap.getComparator());
-		org.junit.Assert.assertNotNull("should not be null", heap.getElement_index());
-		org.junit.Assert.assertNotNull("should not be null", heap.getElement_Keys());
-		org.junit.Assert.assertEquals("failure - int should be equal", 0, heap.size());
+		assertNotNull("should not be null", heap.getData());
+		assertNull("should be null", heap.getComparator());
+		assertNotNull("should not be null", heap.getElement_index());
+		assertNotNull("should not be null", heap.getElement_Keys());
+		assertEquals("failure - int should be equal", 0, heap.size());
 	}
 	
 	@Test
@@ -82,25 +93,25 @@ public class TestAdvancedBinaryHeap {
 		heap.offer(1, 2.0);
 		heap.offer(2, 3.0);
 		expectedData = new ArrayList<Integer>(Arrays.asList(null,1,2));
-		org.junit.Assert.assertEquals("should be equal", heap.getData(), expectedData);
+		assertEquals("should be equal", heap.getData(), expectedData);
 		
 		expectedElement_index = new HashMap<Integer, Integer>();
 		expectedElement_index.put(1, 1);
 		expectedElement_index.put(2, 2);
-		org.junit.Assert.assertEquals("should be equal",heap.getElement_index(), expectedElement_index);
+		assertEquals("should be equal",heap.getElement_index(), expectedElement_index);
 		
 		AdvancedBinaryHeap<Element, Key> heap1 = new AdvancedBinaryHeap<Element, Key>();
 		heap1.offer(new Element(1), new Key(2));
 		heap1.offer(new Element(2), new Key(3));
 		expectedData1 = new ArrayList<Element>(Arrays.asList(null, new Element(1), new Element(2)));
-		org.junit.Assert.assertEquals("should be equal",heap1.getData(), expectedData1);
+		assertEquals("should be equal",heap1.getData(), expectedData1);
 		
 		expectedElement_index1 = new HashMap<Element, Integer>();
 		expectedElement_index1.put(new Element(1), 1);
 		expectedElement_index1.put(new Element(2), 2);
 		System.out.println(expectedElement_index1);
 		//如何比较两个Map相等
-		
+		assertEquals("should be equal", heap1.getElement_index(), expectedElement_index1);
 	}
 	
 	@Test
@@ -113,9 +124,43 @@ public class TestAdvancedBinaryHeap {
 		expectedElement_key = new HashMap<Integer, Double>();
 		expectedElement_key.put(1, 100.0);
 		expectedElement_key.put(2, 3.0);
-		org.junit.Assert.assertEquals("should be equal",heap.getElement_Keys(), expectedElement_key);
+		assertEquals("should be equal",heap.getElement_Keys(), expectedElement_key);
 		
 		expectedData = new ArrayList<Integer>(Arrays.asList(null, 2, 1));
-		org.junit.Assert.assertEquals("should be equal", heap.getData(), expectedData);
+		assertEquals("should be equal", heap.getData(), expectedData);
+	}
+	
+	@Test
+	public void testPeek() {
+		AdvancedBinaryHeap<Integer, Double> heap = new AdvancedBinaryHeap<>();
+		heap.offer(1,2.0);
+		heap.offer(2, 3.0);
+		assertEquals("should be equal", heap.peek(), Arrays.asList(1,2.0));
+		assertEquals("should be equal", heap.getData(), Arrays.asList(null,1,2));
+	}
+	
+	@Test
+	public void testPoll() {
+		AdvancedBinaryHeap<Integer, Double> heap = new AdvancedBinaryHeap<>();
+		heap.offer(1, 2.0);
+		heap.offer(2, 3.0);
+		assertEquals("should be equal", heap.poll(), Arrays.asList(1, 2.0));
+		assertEquals("should be equal", heap.getData(), Arrays.asList(null, 2));
+		assertEquals(heap.size(), 1);
+	}
+	
+	@Test
+	public void testContains() {
+		
+	}
+	
+	@Test
+	public void testCompareKey() {
+		
+	}
+	
+	@Test
+	public void testRemove() {
+		
 	}
 }
