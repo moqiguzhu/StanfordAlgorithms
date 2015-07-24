@@ -1,13 +1,13 @@
 package algorithms.mincut;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * @author moqiguzhu
@@ -17,39 +17,34 @@ import java.util.Scanner;
  *            节点类
  */
 /**********************************************
- * 
- *
- *
- * 
+ *1.使用Scanner读取文件和使用BufferedReader读取文件速度没有
+ *太大变化，可能是因为每次都只是读取一行的原因
+ *2.将图信息存储起来，在每次运行之前，都使用拷贝的图信息进行计算，这样
+ *运算速度也并没有提高，因为没运行一次，图信息就被破坏了，下一次运行前
+ *又需要再拷贝一份图信息。这也应该就是本程序的瓶颈。
+ *3.RandomSet集合并不能用到这个问题上，这里需要的是能够保存重复元素
+ * 集合
  *********************************************/
 public class MinCut<E extends GraphNode> {
 	/* 使用邻接链表表示图 */
 	private Map<E, List<E>> graph;
 	/* 当前还没有规约的节点集合 */
-	List<E> uncontractedNodes;
+	List<E> untractedNodes;
 	Random rand = new Random();
 
 	public void init() {
 		graph = new HashMap<E, List<E>>();
-		uncontractedNodes = new ArrayList<E>();
+		untractedNodes = new ArrayList<E>();
 	}
 
 	public int kargerMinCut() {
-		if (graph == null) {
-			System.out.println("没有初始化！！！");
-			System.exit(1);
-		} else {
-			for (int i = 0; i < graph.size(); i++) {
-				uncontractedNodes.add((E) new GraphNode(i + 1));
-			}
-		}
-		while (uncontractedNodes.size() > 2) {
-			int rand1 = rand.nextInt(uncontractedNodes.size());
-			E node1 = uncontractedNodes.get(rand1);
+		while (untractedNodes.size() > 2) {
+			int rand1 = rand.nextInt(untractedNodes.size());
+			E node1 = untractedNodes.get(rand1);
 			int rand2 = rand.nextInt(graph.get(node1).size());
 			E node2 = graph.get(node1).get(rand2);
 			// O(n)
-			uncontractedNodes.remove(node1);
+			untractedNodes.remove(node2);
 			// graph contract kernel codes
 			int size = graph.get(node1).size();
 			// 删除自环 从后面开始删
@@ -64,27 +59,24 @@ public class MinCut<E extends GraphNode> {
 					graph.get(tempNode).add(node1);
 				}
 				// O(k) k是该节点的邻接节点的个数
-				graph.get(tempNode).remove(node2); // 这行将会消耗大量时间
 				// node2被规约
-				//node2可能还是会被选中，标记一下，！！！
+				graph.get(tempNode).remove(node2); // 这行将会消耗大量时间
 			}
 		}
 		// get(1) get(0)都可以
-		//!!! should be equal
-		System.out.println(graph.get(uncontractedNodes.get(0)).size() + " " + graph.get(uncontractedNodes.get(1)).size());
-		return graph.get(uncontractedNodes.get(0)).size();
+		return graph.get(untractedNodes.get(0)).size();
 	}
 
 	// 指明文件应该有的格式
-	public void createGrahFromFile(String path) throws FileNotFoundException {
+	public void createGrahFromFile(String path) throws Exception {
 		init(); 					// 初始化私有域
 		
-		Scanner sc = new Scanner(new File(path));
+		BufferedReader bf = new BufferedReader(new FileReader(path));
 		String regex = "\\s";
 		String[] result;
-		while (sc.hasNext()) {
-			String str = sc.nextLine();
-			result = str.split(regex);
+		String line;
+		while ((line = bf.readLine()) != null) {
+			result = line.split(regex);
 			// 向下转型，不安全
 			E tempNode = (E) new GraphNode(Integer.valueOf(result[0]));
 			List<E> tempList = new ArrayList<E>();
@@ -93,18 +85,14 @@ public class MinCut<E extends GraphNode> {
 			}
 			graph.put(tempNode, tempList);
 		}
-		sc.close();
-	}
-	
-	public List<E> getUntractedNodes() {
-		return uncontractedNodes;
+		bf.close();
+		
+		//初始化untractedNodes
+		for (int i = 0; i < graph.size(); i++) {
+			untractedNodes.add((E) new GraphNode(i + 1));
+		}
 	}
 
-	// !!! to-do
-	// 测试MinCut类的正确性
-	// 测试MinCut和RSelect到底那个快
-	// 使用更快的读文件操作，看看性能能提高多少
-	// 实现从Set中随机取一个元素的类
 	public static void main(String[] args) throws Exception {
 		MinCut<GraphNode> mincut = new MinCut<GraphNode>();
 		String currentDir = System.getProperty("user.dir");

@@ -1,5 +1,8 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
 	private int[] sortedArray;
@@ -71,5 +74,11 @@ public class Main {
 		
 		System.out.println("This is a test line");
 		System.out.println("This is also a test line");
+		
+		int[] x = {1,2,3};
+		int[] y = x;
+		y[0] = 100;
+		System.out.println(Arrays.toString(x));
+		System.out.println(Arrays.toString(y));
 	}
 }

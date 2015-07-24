@@ -21,7 +21,6 @@ import java.util.Random;
  *RandomSet类继承自AbstractSet类
  *能够在O(1)的时间内判断某个元素是不是在集合内
  *能够在O(1)的时间内随机返回集合内的一个元素
- *用于实现高效的MinCut算法
  *RandomSet类的原作者是fandrew，我是在 Stack Overflow上找到的
  *链接：http://stackoverflow.com/questions/124671/picking-a-random-element-from-a-set
  **************************************/
