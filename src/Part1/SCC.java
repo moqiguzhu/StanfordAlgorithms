@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.sound.sampled.Line;
+
 /**
  * 
  * @author moqiguzhu
@@ -83,14 +85,14 @@ public class SCC {
 	private static int size = 0;
 	
 	public void createGraph() throws Exception {
-		String path = "G:\\研一\\Stanford Algorithms\\week4\\SCC.txt";
+		String path = ".\\testdata\\SCC_test1.txt";
 		File f = new File(path);
 		Scanner sc = new Scanner(f);
 		int label,neighbor;
 		edges = new ArrayList<List<Integer>>();
 		edges.add(new ArrayList<Integer>());	//sentinel
 		//test6.txt会报错 只有入度的节点15没有识别出来
-		while(sc.hasNext()) {			
+		while(sc.hasNext()) {
 			label = sc.nextInt();
 			neighbor = sc.nextInt();
 			while(Math.max(label,neighbor) >= edges.size()) {

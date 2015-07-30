@@ -1,3 +1,5 @@
+## every line means a edge, for example "1 4" mean a edge from node 1 to node 4
+## number of strong connected components of this graph is 1
 1 4
 2 8
 3 6
