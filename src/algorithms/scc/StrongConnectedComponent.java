@@ -14,12 +14,12 @@ import algorithms.graphnode.GraphNode;
  * @param <E>
  *            图节点类
  */
-/********************************
- *强连通分量的非递归实现 
- *
+/******************************************
+ *强连通分量的非递归实现，需要跑两遍DFS，算法的总时间复杂度是
+ *O(n)。
  *
  * 
- ********************************/
+ ******************************************/
 public class StrongConnectedComponent<E extends GraphNode> {
 	/* 使用邻接链表表示图 */
 	private Map<E, List<E>> graph;
