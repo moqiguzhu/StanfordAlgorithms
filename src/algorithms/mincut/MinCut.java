@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import algorithms.graphnode.GraphNode;
+
 /**
  * @author moqiguzhu
  * @date 2015-07-23
@@ -68,7 +70,7 @@ public class MinCut<E extends GraphNode> {
 	}
 
 	// 指明文件应该有的格式
-	public void createGrahFromFile(String path) throws Exception {
+	public void createGraphFromFile(String path) throws Exception {
 		init(); 					// 初始化私有域
 		
 		BufferedReader bf = new BufferedReader(new FileReader(path));
@@ -103,7 +105,7 @@ public class MinCut<E extends GraphNode> {
 		int temp;
 		long start = System.currentTimeMillis();
 		while (times-- > 0) {
-			mincut.createGrahFromFile(path);
+			mincut.createGraphFromFile(path);
 			temp = mincut.kargerMinCut();
 			min = temp > min ? min : temp;
 		}
