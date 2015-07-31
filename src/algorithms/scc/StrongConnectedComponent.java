@@ -6,9 +6,11 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import algorithms.graphnode.GraphNode;
 
@@ -29,11 +31,13 @@ public class StrongConnectedComponent<E extends GraphNode> {
 	/* 图的转置*/
 	private Map<E, List<E>> graphReversed;
 	/* 保存结果*/
-	private List<List<E>> strongConnectedComponents;
+	private List<Set<E>> strongConnectedComponents;
 	/* 时间戳*/
 	private long timeLabel;
 	/* DFS使用的栈*/
 	private LinkedList<E> stack;
+	/* 图的节点集合*/
+	private Map<E, E> nodes;
 	
 	public void init() {
 		graph = new HashMap<>();
@@ -41,6 +45,7 @@ public class StrongConnectedComponent<E extends GraphNode> {
 		strongConnectedComponents = new ArrayList<>();
 		timeLabel = 0L;
 		stack = new LinkedList<>();
+		nodes = new HashMap<>();
 	}
 	
 	public void createGraphFromFile(String path) throws Exception {
@@ -54,17 +59,20 @@ public class StrongConnectedComponent<E extends GraphNode> {
 				continue;
 			}
 			result = line.split(regex);
-			E tempNode1 = (E) new GraphNode(Integer.valueOf(result[0]));
-			E tempNode2 = (E) new GraphNode(Integer.valueOf(result[1]));
+			E tempNode1 = (E) new GraphNode(Integer.valueOf(result[0]), 'w', 0L , 0L);
+			E tempNode2 = (E) new GraphNode(Integer.valueOf(result[1]), 'w', 0L, 0L);
+			if(!nodes.containsKey(tempNode1)) {
+				nodes.put(tempNode1, tempNode1);
+			}
+			if(!nodes.containsKey(tempNode2)) {
+				nodes.put(tempNode2, tempNode2);
+			}
 			if(graph.containsKey(tempNode1)) {
-				graph.get(tempNode1).add(tempNode2);
+				graph.get(tempNode1).add(nodes.get(tempNode2));
 			} else {
 				List<E> tempList = new ArrayList<>();
-				tempList.add(tempNode2);
-				graph.put(tempNode1, tempList);
-			}
-			if(!graph.containsKey(tempNode2)) {
-				graph.put(tempNode2, new ArrayList<E>());
+				tempList.add(nodes.get(tempNode2));
+				graph.put(nodes.get(tempNode1), tempList);
 			}
 		}
 		//关闭文件
@@ -81,14 +89,25 @@ public class StrongConnectedComponent<E extends GraphNode> {
 					graphReversed.get(node2).add(node1);
 				} else {
 					List<E> tempList = new ArrayList<>();
-					tempList.add((E)new GraphNode(node1.getLabel(), 'w', 0L, 0L));
-					E node = (E)new GraphNode(node2.getLabel(), 'w', 0L, 0L);
-					graphReversed.put(node, tempList);
-					end_node.put(node2.getEnd(), node);
+					tempList.add(node1);
+					graphReversed.put(node2, tempList);
 				}
 			}
 		}
+		for(E node : nodes.keySet()) {
+			end_node.put(node.getEnd(), node);
+		}
+		refreshNode();
+		
 		return end_node;
+	}
+	
+	public void refreshNode() {
+		for(E node: nodes.keySet()) {
+			node.setColor('w');
+			node.setStart(0L);
+			node.setEnd(0L);
+		}
 	}
 	
 	public void DFS() {
@@ -99,17 +118,21 @@ public class StrongConnectedComponent<E extends GraphNode> {
 		}
 	}
 	
-	public List<E> DFS_VISIT(E node, Map<E, List<E>> graph) {
-		List<E> oneStrongComponent = new ArrayList<>();
-		stack.addLast(node);
+	public Set<E> DFS_VISIT(E node, Map<E, List<E>> graph) {
+		Set<E> oneStrongComponent = new HashSet<>();
+		stack.addLast(node);							
 		while(!stack.isEmpty()) {
 			E tempNode = stack.peekLast();
 			timeLabel = timeLabel + 1;
-			tempNode.setStart(timeLabel);
+			if(tempNode.getStart() == 0L) {
+				tempNode.setStart(timeLabel);
+			}
 			tempNode.setColor('g');
-			for(E ttNode : graph.get(tempNode)) {
-				if(ttNode.getColor() == 'w') {
-					stack.addLast(ttNode);
+			if(graph.containsKey(tempNode)) {
+				for(E ttNode : graph.get(tempNode)) {
+					if(ttNode.getColor() == 'w') {
+						stack.addLast(ttNode);
+					}
 				}
 			}
 			if(stack.peekLast().equals(tempNode)) {
@@ -124,8 +147,9 @@ public class StrongConnectedComponent<E extends GraphNode> {
 	}
 	
 	
-	public List<List<E>> getStrongConnectedComponents() {
+	public List<Set<E>> getStrongConnectedComponents() {
 		DFS();
+		timeLabel = 0;
 		Map<Long,E> end_node = reverseGraph();
 		List<Long> ends = new ArrayList<>(end_node.keySet());
 		Collections.sort(ends, Collections.reverseOrder());
@@ -141,9 +165,14 @@ public class StrongConnectedComponent<E extends GraphNode> {
 	public static void main(String[] args) throws Exception {
 		StrongConnectedComponent<GraphNode> SCC = new StrongConnectedComponent<>();
 		String currentDir = System.getProperty("user.dir");
-		String path = currentDir + File.separator + "testdata" + File.separator + "SCC_test1.txt";
+		String path = currentDir + File.separator + "testdata" + File.separator + "SCC.txt";
 		SCC.createGraphFromFile(path);
-		List<List<GraphNode>> components = SCC.getStrongConnectedComponents();
-		System.out.println(components.size());
+		List<Set<GraphNode>> components = SCC.getStrongConnectedComponents();
+		List<Integer> componentsSize = new ArrayList<Integer>();
+		for(int i = 0; i < components.size(); i++) {
+			componentsSize.add(components.get(i).size());
+		}
+		Collections.sort(componentsSize, Collections.reverseOrder());
+		System.out.println(componentsSize);
 	}
 }

@@ -60,7 +60,7 @@ public class GraphNode {
 	
 	@Override
 	public String toString() {
-		return "" + label;
+		return "" + label + " " + color + " " + start + " " + end; 
 	}
 	
 	@Override

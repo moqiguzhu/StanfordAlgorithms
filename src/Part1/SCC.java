@@ -85,7 +85,7 @@ public class SCC {
 	private static int size = 0;
 	
 	public void createGraph() throws Exception {
-		String path = ".\\testdata\\SCC_test1.txt";
+		String path = ".\\testdata\\SCC_test5.txt";
 		File f = new File(path);
 		Scanner sc = new Scanner(f);
 		int label,neighbor;
