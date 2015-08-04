@@ -22,8 +22,10 @@ import algorithms.graphnode.GraphNode;
 /******************************************
  *强连通分量的非递归实现，需要跑两遍DFS，算法的总时间复杂度是
  *O(n)。
- *!!! need to debug
- * 
+ *这个bug很微妙，现在这个程序和正确的程序返回的结果非常接近，
+ *现在有一种非常耗时的做法就是把这个程序返回的结果和正确程序的
+ *输出结果比较，看看有到底有什么区别，还有为什么会多出一个大小
+ *为304的强联通分量
  ******************************************/
 public class StrongConnectedComponent<E extends GraphNode> {
 	/* 使用邻接链表表示图 */
@@ -31,7 +33,7 @@ public class StrongConnectedComponent<E extends GraphNode> {
 	/* 图的转置*/
 	private Map<E, List<E>> graphReversed;
 	/* 保存结果*/
-	private List<Set<E>> strongConnectedComponents;
+	private List<List<E>> strongConnectedComponents;
 	/* 时间戳*/
 	private long timeLabel;
 	/* DFS使用的栈*/
@@ -118,9 +120,12 @@ public class StrongConnectedComponent<E extends GraphNode> {
 		}
 	}
 	
-	public Set<E> DFS_VISIT(E node, Map<E, List<E>> graph) {
-		Set<E> oneStrongComponent = new HashSet<>();
-		stack.addLast(node);							
+	public List<E> DFS_VISIT(E node, Map<E, List<E>> graph) {
+		List<E> oneStrongComponent = new ArrayList<>();
+		stack.addLast(node);
+		//已经加入过的节点不能被再次加入，考虑只有四个节点的完全图可以发现这种情况
+		Set<E> stackElements = new HashSet<>();
+		stackElements.add(node);
 		while(!stack.isEmpty()) {
 			E tempNode = stack.peekLast();
 			timeLabel = timeLabel + 1;
@@ -130,13 +135,15 @@ public class StrongConnectedComponent<E extends GraphNode> {
 			tempNode.setColor('g');
 			if(graph.containsKey(tempNode)) {
 				for(E ttNode : graph.get(tempNode)) {
-					if(ttNode.getColor() == 'w') {
+					if(ttNode.getColor() == 'w' && !stackElements.contains(ttNode)) {
 						stack.addLast(ttNode);
+						stackElements.add(ttNode);
 					}
 				}
 			}
 			if(stack.peekLast().equals(tempNode)) {
 				oneStrongComponent.add(stack.pollLast());
+				stackElements.remove(tempNode);
 				tempNode.setColor('b');
 				timeLabel += 1;
 				tempNode.setEnd(timeLabel);
@@ -147,7 +154,7 @@ public class StrongConnectedComponent<E extends GraphNode> {
 	}
 	
 	
-	public List<Set<E>> getStrongConnectedComponents() {
+	public List<List<E>> getStrongConnectedComponents() {
 		DFS();
 		timeLabel = 0;
 		Map<Long,E> end_node = reverseGraph();
@@ -167,7 +174,7 @@ public class StrongConnectedComponent<E extends GraphNode> {
 		String currentDir = System.getProperty("user.dir");
 		String path = currentDir + File.separator + "testdata" + File.separator + "SCC.txt";
 		SCC.createGraphFromFile(path);
-		List<Set<GraphNode>> components = SCC.getStrongConnectedComponents();
+		List<List<GraphNode>> components = SCC.getStrongConnectedComponents();
 		List<Integer> componentsSize = new ArrayList<Integer>();
 		for(int i = 0; i < components.size(); i++) {
 			componentsSize.add(components.get(i).size());
