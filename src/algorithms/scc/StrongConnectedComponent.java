@@ -26,6 +26,7 @@ import algorithms.graphnode.GraphNode;
  *现在有一种非常耗时的做法就是把这个程序返回的结果和正确程序的
  *输出结果比较，看看有到底有什么区别，还有为什么会多出一个大小
  *为304的强联通分量
+ *!!! need to debug
  ******************************************/
 public class StrongConnectedComponent<E extends GraphNode> {
 	/* 使用邻接链表表示图 */
