@@ -91,12 +91,12 @@ public class AdvancedBinaryHeap<E, K> {
 	}
 
 	// return the index of parent
-	public int parent(int index) {
+	private int parent(int index) {
 		return index / 2;
 	}
 
 	// return the index of left child
-	public int left(int index) {
+	private int left(int index) {
 		return 2 * index;
 	}
 
@@ -256,6 +256,7 @@ public class AdvancedBinaryHeap<E, K> {
 
 	// O(n)的时间复杂度
 	// 并且存在错误，因为如果两个element的key是一样的话，它们在数组中的位置实际上是任意的
+	// 但是如果能保证element不重复，这个函数可以使用
 	@Deprecated
 	public boolean remove(Object object) {
 		E element = (E) object;

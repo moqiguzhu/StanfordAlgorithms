@@ -47,7 +47,7 @@ public class Dijkstra {
 	private int MAX = 1000000; 
 	Map<Integer,Integer> result = new HashMap<Integer,Integer>();
 	public void buildGraph() throws Exception{
-		String path = "C:\\C\\llm\\研一\\Stanford Algorithms\\week5\\dijkstraData.txt";
+		String path = ".\\testdata\\Dijkstra.txt";
 		File f = new File(path);
 		Scanner sc = new Scanner(f);
 		String regex = "\\s";
@@ -139,8 +139,8 @@ public class Dijkstra {
 		Dijkstra dij = new Dijkstra();
 		dij.DijkstraSingleSourceShortestPath();
 		int[] test = {7,37,59,82,99,115,133,165,188,197};
-		for(int x : test)
-			System.out.print(dij.result.get(x) + ",");
-//		System.out.print(dij.result.toString());
+//		for(int x : test)
+//			System.out.print(dij.result.get(x) + ",");
+		System.out.print(dij.result.toString());
 	}
 }
