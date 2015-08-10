@@ -13,7 +13,7 @@ public class TwoSum {
 	private Set<Double> result;
 
 	public void readFiles() throws Exception{
-		String path = "G:\\研一\\Stanford Algorithms\\week6\\algo1-programming_prob-2sum.txt";
+		String path = ".\\testdata\\2sum.txt";
 		File f = new File(path);
 		Scanner sc = new Scanner(f);
 		list = new ArrayList<Double>();

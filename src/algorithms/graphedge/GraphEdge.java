@@ -1,8 +1,8 @@
-package algorithms.edge;
+package algorithms.graphedge;
 
 import algorithms.graphnode.GraphNode;
 
-public class Edge {
+public class GraphEdge {
 	/* 边左边的节点*/
 	private GraphNode leftNode;
 	/* 边右边的节点*/
@@ -10,7 +10,7 @@ public class Edge {
 	/* 边权值*/
 	private double weight;
 	
-	public Edge(GraphNode leftNode, GraphNode rightNode, double weight) {
+	public GraphEdge(GraphNode leftNode, GraphNode rightNode, double weight) {
 		this.leftNode = leftNode;
 		this.rightNode = rightNode;
 		this.weight = weight;
@@ -30,7 +30,7 @@ public class Edge {
 	
 	@Override
 	public boolean equals(Object o) {
-		Edge edge = (Edge) o;
+		GraphEdge edge = (GraphEdge) o;
 		return edge.getLeftNode().equals(this.leftNode) && edge.getRightNode().equals(this.rightNode);
 	}
 	

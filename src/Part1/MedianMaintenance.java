@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class MedianMaintenance {
 	public static void main(String[] args) throws Exception{
-		Scanner sc = new Scanner(new File("G:\\研一\\Stanford Algorithms\\week6\\Median.txt"));
+		Scanner sc = new Scanner(new File(".\\testdata\\median_test1.txt"));
 		PriorityQueue<Integer> lowHalf,highHalf;
 		lowHalf = new PriorityQueue<Integer>(10,Collections.reverseOrder());
 		highHalf = new PriorityQueue<Integer>();
