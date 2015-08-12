@@ -9,6 +9,7 @@ package Part2;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
@@ -128,7 +129,8 @@ public class KnapSackBranchBoundDepthFirst {
 		}
 	}
 	
-	public void quickSort(int l, int r, double[] num, int[] index) {
+	//从大到小排序
+	public static void quickSort(int l, int r, double[] num, int[] index) {
 		if(r <= l) return;
 		double pivot = num[l];
 		// i j 两个指针
@@ -230,10 +232,20 @@ public class KnapSackBranchBoundDepthFirst {
 		return curOpt;
 	}
 	
+	public static void testQuickSort() {
+		double[] test = {2,2,2,1,1,1};
+		int[] index = new int[test.length];
+		for(int i = 0; i < index.length; i++) {
+			index[i] = i;
+		}
+		quickSort(0, test.length-1, test, index);
+		System.out.println(Arrays.toString(test));
+	}
+	
 	//test this class
 	public static void main(String[] args) throws Exception{
         List<String> lines = new ArrayList<String>();
-        String filePath = "C:\\Master\\Stanford Algorithms 2\\week3\\knapsack_big.txt";
+        String filePath = "C:\\Master\\MOOCs\\Stanford Algorithms 2\\week3\\knapsack_big.txt";
 
         BufferedReader input =  new BufferedReader(new FileReader(filePath));
         try {

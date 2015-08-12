@@ -28,9 +28,10 @@ public class QuickSort {
 	}
 	
 	public int quickSort() throws Exception{
-		num = readFile();
+//		num = readFile();
 //		num = new int[]{3,8,2,5,1,4,7,6};
 //		num = new int[]{1,2,3,4};
+		num = new int[]{2,1};
 		sumComparisions = 0;
 		helpFunction_1(0, num.length-1);
 		System.out.println(Arrays.toString(num));
@@ -142,7 +143,9 @@ public class QuickSort {
 		List<int[]> testcases = new ArrayList<int[]>();
 		
 		int[] num1 = {3,8,2,5,1,4,7,6};
+		int[] num2 = {2,2,2,1,1,1};
 		testcases.add(num1);
+		testcases.add(num2);
 		
 		return testcases;
 	}
