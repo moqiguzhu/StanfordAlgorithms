@@ -7,10 +7,13 @@ class KnapSackNode {
 	private double estVal;
 	/*当前背包的剩余容量*/
 	private int remainCap;
-	/*state == 1 or state == 2*/
+	/*只能取toProcess和processed两个值*/
 	private int state;
 	/*index of item*/
 	private int index;
+	
+	public static final int toProcess = 1;
+	public static final int processed = 2;
 	
 	public KnapSackNode(int curVal, double estVal, int remainCap, int state, int index) {
 		this.curVal = curVal;
