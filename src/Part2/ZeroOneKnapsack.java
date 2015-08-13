@@ -45,7 +45,7 @@ public class ZeroOneKnapsack {
 	//test more smaller data sets
 	public static void main(String[] args) throws Exception{
 		ZeroOneKnapsack zok = new ZeroOneKnapsack();
-		String filePath = "C:\\Master\\Stanford Algorithms 2\\week3\\knapsack1.txt";
+		String filePath = ".\\testdata\\knapsack1.txt";
 		zok.readFiles(filePath);
 		System.out.println(zok.optimalSelecting());
 	}
