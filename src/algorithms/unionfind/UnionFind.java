@@ -1,10 +1,15 @@
 package algorithms.unionfind;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import algorithms.graphnode.GraphNode;
+
 /**
+ * 带按秩合并和路径压缩的并查集实现。并查集可以用来实现快速Kruskal的最小生成树算法和与之对应的single link聚类算法。
+ * 参考书籍：<Algorithms> by Sedgewick
  * 
  * @author moqiguzhu
  * @date 2015-08-12
@@ -112,8 +117,40 @@ public class UnionFind<E> {
 		return ele_index.get(ele);
 	}
 
-	// !!! test this data structure
-	// !!! test single link cluster
+	/**
+	 * 测试此数据结构
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
+		UnionFind<GraphNode> uf = new UnionFind<>();
+		List<GraphNode> nodes = new ArrayList<>();
+
+		GraphNode node1 = new GraphNode(1);
+		GraphNode node2 = new GraphNode(2);
+		GraphNode node3 = new GraphNode(3);
+		GraphNode node4 = new GraphNode(4);
+		nodes.add(node1);
+		nodes.add(node2);
+		nodes.add(node3);
+		nodes.add(node4);
+
+		uf.init(nodes);
+
+		uf.union(node1, node2);
+		System.out.println(uf.getCount()); // should be 3
+		System.out.println(uf.connected(node1, node2)); // should be true
+
+		uf.union(node2, node3);
+		System.out.println(uf.getCount()); // should be 2
+		System.out.println(uf.connected(node3, node1)); // should be true
+
+		uf.union(node1, node4);
+		System.out.println(uf.getCount()); // should be 1
+		System.out.println(uf.connected(node3, node4)); // should be true
+		System.out.println(uf.find(node2) == uf.find(node4)); // should be true
+
+		uf.union(node1, node4);
+		System.out.println(uf.getCount()); // should be 1
 	}
 }
