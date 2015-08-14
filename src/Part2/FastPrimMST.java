@@ -13,7 +13,7 @@ public class FastPrimMST {
 	private static int cost = 0;
 	
 	public void buildGraph() throws Exception{
-		String path = ".\\testdata\\MST_test1.txt";
+		String path = ".\\testdata\\clustering1.txt";
 		File f = new File(path);
 		Scanner sc = new Scanner(f);
 		String regex = "\\s";

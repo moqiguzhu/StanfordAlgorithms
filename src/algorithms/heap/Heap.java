@@ -194,6 +194,10 @@ public class Heap<E, K> {
 			bubbleUp(element);
 		}
 	}
+	
+	public K getKey(E element) {
+		return element_key.get(element);
+	}
 
 	// 有可能返回null
 	public Comparator<? super K> comparator() {
