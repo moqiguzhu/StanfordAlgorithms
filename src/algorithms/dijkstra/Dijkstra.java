@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 import algorithms.graphedge.GraphEdge;
 import algorithms.graphnode.GraphNode;
-import algorithms.heap.AdvancedBinaryHeap;
+import algorithms.heap.Heap;
 
 /**
  * @author moqiguzhu
@@ -25,7 +25,7 @@ import algorithms.heap.AdvancedBinaryHeap;
 
 public class Dijkstra {
 	/*key为节点到源节点之间的当前距离*/
-	private AdvancedBinaryHeap<GraphNode, Double> heap;
+	private Heap<GraphNode, Double> heap;
 	/*存储图的边权值信息*/
 	private Map<GraphEdge, GraphEdge> edge_edge;
 	/*存储图的节点之间的连接信息*/
@@ -45,7 +45,7 @@ public class Dijkstra {
 		GraphNode source, dest;
 		
 		//初始化
-		heap = new AdvancedBinaryHeap<GraphNode, Double>();
+		heap = new Heap<GraphNode, Double>();
 		edge_edge = new HashMap<GraphEdge, GraphEdge>();	
 		node_neighborNodes = new HashMap<GraphNode, List<GraphNode>>();
 		shortestDists = new HashMap<GraphNode, Double>();

@@ -22,7 +22,7 @@ import java.util.Map;
 // 处理异常，强制类型转换报warning的地方需要修改
 // 因为采用Map存储数据，这就要求堆中不能有两个完全一样的数据(缺陷？)
 // 泛型单元测试
-public class AdvancedBinaryHeap<E, K> {
+public class Heap<E, K> {
 	/* 保存节点在heap中的位置信息 */
 	private Map<E, Integer> element_index;
 	/* heap的底层使用数组实现，节点使用一个整数来标识 */
@@ -39,12 +39,12 @@ public class AdvancedBinaryHeap<E, K> {
 		element_key = new HashMap<E, K>();
 	}
 
-	public AdvancedBinaryHeap() {
+	public Heap() {
 		super();
 		init();
 	}
 
-	public AdvancedBinaryHeap(List<? extends E> c, List<? extends K> k) {
+	public Heap(List<? extends E> c, List<? extends K> k) {
 		init();
 		E element;
 		for (int i = 0; i < c.size(); i++) {
@@ -58,7 +58,7 @@ public class AdvancedBinaryHeap<E, K> {
 		}
 	}
 
-	public AdvancedBinaryHeap(int initialCapacity) {
+	public Heap(int initialCapacity) {
 		element_index = new HashMap<E, Integer>();
 		data = new ArrayList<E>(initialCapacity + 1);
 		data.add(null); // sentinel， 数组的第一个空间不使用，方便left和right函数的编写
@@ -66,7 +66,7 @@ public class AdvancedBinaryHeap<E, K> {
 	}
 
 	//
-	public AdvancedBinaryHeap(int initialCapacity, Comparator<? super K> comparator) {
+	public Heap(int initialCapacity, Comparator<? super K> comparator) {
 		element_index = new HashMap<E, Integer>();
 		data = new ArrayList<E>(initialCapacity + 1);
 		data.add(null); // sentinel， 数组的第一个空间不使用，方便left和right函数的编写
@@ -278,7 +278,7 @@ public class AdvancedBinaryHeap<E, K> {
 	}
 
 	public static void main(String[] args) {
-		AdvancedBinaryHeap<Integer, Double> heap = new AdvancedBinaryHeap<Integer, Double>();
+		Heap<Integer, Double> heap = new Heap<Integer, Double>();
 
 		// test offer function
 		heap.offer(1, 2.0);

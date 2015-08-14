@@ -61,7 +61,7 @@ class Key implements Comparator<Key> {
 }
 
 //单元测试也要写泛型？
-public class TestAdvancedBinaryHeap {
+public class TestHeap {
 	private List<Integer> expectedData;
 	private Map<Integer, Integer> expectedElement_index;
 	private Map<Integer, Double> expectedElement_key;
@@ -72,14 +72,14 @@ public class TestAdvancedBinaryHeap {
 	
 	@Test
 	public void testConstrutor() {
-		AdvancedBinaryHeap<Integer, Double> heap = new AdvancedBinaryHeap<Integer, Double>();
+		Heap<Integer, Double> heap = new Heap<Integer, Double>();
 		assertNotNull("should not be null", heap.getData());
 		assertNull("should be null", heap.getComparator());
 		assertNotNull("should not be null", heap.getElement_index());
 		assertNotNull("should not be null", heap.getElement_Keys());
 		assertEquals("failure - int should be equal", 0, heap.size());	
 		
-		AdvancedBinaryHeap<Element, Key> heap1 = new AdvancedBinaryHeap<Element, Key>();
+		Heap<Element, Key> heap1 = new Heap<Element, Key>();
 		assertNotNull("should not be null", heap.getData());
 		assertNull("should be null", heap.getComparator());
 		assertNotNull("should not be null", heap.getElement_index());
@@ -89,7 +89,7 @@ public class TestAdvancedBinaryHeap {
 	
 	@Test
 	public void testOffer() {
-		AdvancedBinaryHeap<Integer, Double> heap = new AdvancedBinaryHeap<Integer, Double>();
+		Heap<Integer, Double> heap = new Heap<Integer, Double>();
 		heap.offer(1, 2.0);
 		heap.offer(2, 3.0);
 		expectedData = new ArrayList<Integer>(Arrays.asList(null,1,2));
@@ -100,7 +100,7 @@ public class TestAdvancedBinaryHeap {
 		expectedElement_index.put(2, 2);
 		assertEquals("should be equal",heap.getElement_index(), expectedElement_index);
 		
-		AdvancedBinaryHeap<Element, Key> heap1 = new AdvancedBinaryHeap<Element, Key>();
+		Heap<Element, Key> heap1 = new Heap<Element, Key>();
 		heap1.offer(new Element(1), new Key(2));
 		heap1.offer(new Element(2), new Key(3));
 		expectedData1 = new ArrayList<Element>(Arrays.asList(null, new Element(1), new Element(2)));
@@ -116,7 +116,7 @@ public class TestAdvancedBinaryHeap {
 	
 	@Test
 	public void testSetKey() {
-		AdvancedBinaryHeap<Integer, Double> heap = new AdvancedBinaryHeap<>();
+		Heap<Integer, Double> heap = new Heap<>();
 		heap.offer(1, 2.0);
 		heap.offer(2, 3.0);
 		heap.setKey(1, 100.0);
@@ -132,7 +132,7 @@ public class TestAdvancedBinaryHeap {
 	
 	@Test
 	public void testPeek() {
-		AdvancedBinaryHeap<Integer, Double> heap = new AdvancedBinaryHeap<>();
+		Heap<Integer, Double> heap = new Heap<>();
 		heap.offer(1,2.0);
 		heap.offer(2, 3.0);
 		assertEquals("should be equal", heap.peek(), Arrays.asList(1,2.0));
@@ -141,7 +141,7 @@ public class TestAdvancedBinaryHeap {
 	
 	@Test
 	public void testPoll() {
-		AdvancedBinaryHeap<Integer, Double> heap = new AdvancedBinaryHeap<>();
+		Heap<Integer, Double> heap = new Heap<>();
 		heap.offer(1, 2.0);
 		heap.offer(2, 3.0);
 		assertEquals("should be equal", heap.poll(), Arrays.asList(1, 2.0));

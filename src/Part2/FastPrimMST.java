@@ -13,7 +13,7 @@ public class FastPrimMST {
 	private static int cost = 0;
 	
 	public void buildGraph() throws Exception{
-		String path = "C:\\Master\\Stanford Algorithms 2\\edges.txt";
+		String path = ".\\testdata\\MST_test1.txt";
 		File f = new File(path);
 		Scanner sc = new Scanner(f);
 		String regex = "\\s";
