@@ -55,11 +55,8 @@ public class Prim {
 				GraphNode right = new GraphNode(Integer.valueOf(strArr[1]));
 				double weight = Integer.valueOf(strArr[2]);
 
-				// 无向图
 				GraphEdge edge = new GraphEdge(left, right, weight);
-				GraphEdge edge1 = new GraphEdge(right, left, weight);
 				edge_edge.put(edge, edge);
-				edge_edge.put(edge1, edge1);
 
 				if (!nodes.contains(left)) {
 					nodes.add(left);
@@ -69,7 +66,8 @@ public class Prim {
 					nodes.add(right);
 					heap.offer(right, MAX);
 				}
-
+				
+				// 无向图节点相邻信息的保存方式
 				if (!node_neighborNodes.containsKey(left)) {
 					node_neighborNodes.put(left, new ArrayList<GraphNode>());
 				}

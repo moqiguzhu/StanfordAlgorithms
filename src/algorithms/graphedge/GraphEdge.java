@@ -31,7 +31,8 @@ public class GraphEdge {
 	@Override
 	public boolean equals(Object o) {
 		GraphEdge edge = (GraphEdge) o;
-		return edge.getLeftNode().equals(this.leftNode) && edge.getRightNode().equals(this.rightNode);
+		return (edge.getLeftNode().equals(this.leftNode) && edge.getRightNode().equals(this.rightNode)) ||
+				(edge.getLeftNode().equals(rightNode) && edge.getRightNode().equals(leftNode));
 	}
 	
 	@Override

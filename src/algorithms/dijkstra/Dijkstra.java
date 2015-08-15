@@ -68,11 +68,10 @@ public class Dijkstra {
 				for(int i = 1; i < strArr.length; i++) {
 					dest = new GraphNode(Integer.valueOf(strArr[i].split(regex1)[0]));
 					weight = Double.valueOf(strArr[i].split(regex1)[1]);
-					GraphEdge edge1 = new GraphEdge(source, dest, weight);
-					GraphEdge edge2 = new GraphEdge(dest, source, weight);
-					//无向图
-					edge_edge.put(edge1, edge1);
-					edge_edge.put(edge2, edge2);
+					GraphEdge edge = new GraphEdge(source, dest, weight);
+					edge_edge.put(edge, edge);
+					// 一般来说，对于无向图，既需要保存source到dest的信息，还需要保存dest到source的信息
+					// 但是在这个问题中，只需要单向保存就可以，这是由这个问题的本质决定的
 					node_neighborNodes.get(source).add(dest);
 				}
 			}
