@@ -7,6 +7,10 @@ Happy to make friends here. We can talk codes, sports and everything in life.
 - all the test data are placed in the **testdata** directory
 
 ## Algorithms
+### Rules
+n - number of nodes in a grapg
+m - number of edges in a graph
+
 ### KnapSack
 
 Two methods have been used to solve the KnapSack problem. One is the traditional mehtod, that's Dynamic programming, the other is called Branch and Bound, which will be more space and time efficient than traditional DP method.
@@ -25,5 +29,15 @@ Generally speaking, there are two algorithms solving Minimum Spanning Tree(MST) 
 
 - The **MST** algorithm has another application called **Single-linkage clustering**, also called **Maximum Spacing clustering**, because it can keep the distance between clusters maximum when given number of clusters. **Single Link Clustering** is one of hierarchical cluster methods. For more detailed information, please refer to [Single-linkage clustering](https://en.wikipedia.org/wiki/Single-linkage_clustering)
 
+### Single Path Shortest Path
+Generally speaking, there are two algorithms to solve Single Source Shortest Path problem(SSSP), they are Dijkstra algorithm and Bellman-Ford algorithm.
+
+- Dijkstra algorithm is much similar to Prim's MST algorithm, both need a heap to boost. The time complexity of Dijkstra algorithm is **nlogn + m**. Dijkstra algorithm suppose that there is no negative cycle in the graph, in those cases SSSP problem is undefined. Dijkstra's algorithm is indispensable for Johnson's algorithm. For more detailed information, please refer to [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+
+- Different from Dijkstra's algorithm, Bellman and Ford proposed a new DP based algorithm to solve SSSP problem. There are two advantages when compared with Dijkstra algorithm. One is that Bellman-Ford algorithm is easier to understand and implement, the other is that Bellman-Ford algorithm can detect whether existing a negative cycle in a graph while Dijkstra's algorithm can not. Unfortunately, the time complexity of Bellman-Ford algorithm is **mn**. The test result on Dijkstra.txt shows that Dijkstra's algorithm is about 10 times faster than Bellman-Ford algorithm.
+
+### All Pairs Shortest Path 
+
 ## What to do 
 - StrongConnectedComponent need to debug
+- add All Pairs Shortest Path algorithms description
