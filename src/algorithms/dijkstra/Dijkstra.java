@@ -24,12 +24,16 @@ import algorithms.heap.Heap;
 public class Dijkstra {
 	/* key为节点到源节点之间的当前距离 */
 	private Heap<GraphNode, Double> heap;
+	
 	/* 存储图的边权值信息 */
 	private Map<GraphEdge, GraphEdge> edge_edge;
+	
 	/* 存储图的节点之间的连接信息 */
 	private Map<GraphNode, List<GraphNode>> node_neighborNodes;
+	
 	/* key为节点到源节点之间的最短距离 */
 	private Map<GraphNode, Double> shortestDists;
+	
 	/* 到源节点的初始距离 */
 	private double MAX = Double.MAX_VALUE;
 
@@ -62,7 +66,7 @@ public class Dijkstra {
 			strArr = line.split(regex);
 			source = new GraphNode(Integer.valueOf(strArr[0]));
 			node_neighborNodes.put(source, new ArrayList<GraphNode>());
-			if (Integer.valueOf(strArr[0]) == 1) { // 源节点
+			if (Integer.valueOf(strArr[0]) == 1) { 			// 源节点
 				heap.offer(source, .0);
 				shortestDists.put(source, .0);
 			} else {

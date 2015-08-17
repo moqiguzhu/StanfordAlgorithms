@@ -1,4 +1,4 @@
-package algorithms.apsp;
+package algorithms.floydwarshall;
 
 import java.io.File;
 import java.util.HashSet;
