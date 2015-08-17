@@ -57,7 +57,7 @@ public class FloydWarshall {
 	}
 
 	/**
-	 * 使用Floyd Warshall算法解决所有节点之间的最短距离问题
+	 * 使用Floyd Warshall算法解决所有节点之间的最短距离问题。注意这个实现要求节点的label从1取值到numNodes
 	 * 
 	 * @return
 	 */
