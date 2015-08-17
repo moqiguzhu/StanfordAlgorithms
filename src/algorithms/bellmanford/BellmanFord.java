@@ -69,41 +69,42 @@ public class BellmanFord {
 	}
 
 	/**
-	 * Bellman-Ford算法，如果发现图中存在negative cycle，程序直接退出
+	 * Bellman-Ford算法，如果发现图中存在negative cycle，程序直接退出。
+	 * 在实现过程中，使用了空间压缩技术
 	 */
 	public void solveBellmanFord() {
 		int numNodes = node_neighborNodes.size();
-		double[][] numNodes_node = new double[numNodes + 1][numNodes + 1];
+		double[][] numNodes_node = new double[2][numNodes + 1];
 
 		// 初始化
 		for (int j = 1; j < numNodes + 1; j++) {
 			if (j == 1) { // 源节点的label为1
-				numNodes_node[0][j] = 0;
+				numNodes_node[0%2][j] = 0;
 			} else {
-				numNodes_node[0][j] = MAX;
+				numNodes_node[0%2][j] = MAX;
 			}
 		}
 
 		// Bellman-Ford算法
 		for (int i = 1; i < numNodes + 1; i++) {
 			for (int j = 1; j < numNodes + 1; j++) {
-				double temp = numNodes_node[i - 1][j];
+				double temp = numNodes_node[(i-1)%2][j];
 
 				GraphNode node = new GraphNode(j);
 				for (GraphNode nd : node_neighborNodes.get(node)) {
 					GraphEdge edge = new GraphEdge(nd, node, 0);
-					double ttemp = numNodes_node[i - 1][nd.getLabel()]
+					double ttemp = numNodes_node[(i-1)%2][nd.getLabel()]
 							+ edge_edge.get(edge).getWeight();
 					temp = Math.min(ttemp, temp);
 				}
 
-				numNodes_node[i][j] = temp;
+				numNodes_node[i%2][j] = temp;
 			}
 		}
 
 		// 判断是不是有negative cycle
 		for (int j = 1; j < numNodes + 1; j++) {
-			if (numNodes_node[numNodes - 1][j] != numNodes_node[numNodes][j]) {
+			if (numNodes_node[(numNodes-1)%2][j] != numNodes_node[(numNodes)%2][j]) {
 				System.out.println("图中存在negative cycle!!!");
 				System.exit(1);
 			}
@@ -111,9 +112,11 @@ public class BellmanFord {
 
 		// 所有节点到源节点的最短路径
 		for (GraphNode node : node_neighborNodes.keySet()) {
-			shortestDists.put(node, numNodes_node[numNodes][node.getLabel()]);
+			shortestDists.put(node, numNodes_node[numNodes%2][node.getLabel()]);
 		}
 	}
+	
+	
 
 	/**
 	 * 
