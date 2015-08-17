@@ -43,3 +43,5 @@ Generally speaking, there are algorithms to solve All Pairs Shortest Path proble
 
 ## What to do 
 - StrongConnectedComponent need to debug
+- make Bellman-Ford more general
+- make Dijkstra more general
