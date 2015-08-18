@@ -20,11 +20,8 @@ import algorithms.graphnode.GraphNode;
  */
 
 public class BellmanFord {
-	/* 存储结点及其相邻的节点信息(出度信息) */
-	private Map<GraphNode, List<GraphNode>> node_neighborNodes = new HashMap<>();
-	
 	/* 存储结点及其相邻的节点信息(入度信息)*/
-	private Map<GraphNode, List<GraphNode>> neighborNodes_nodeMap = new HashMap<>();
+	private Map<GraphNode, List<GraphNode>> neighborNodes_node = new HashMap<>();
 
 	/* 存储图的边权值信息 */
 	private Map<GraphEdge, GraphEdge> edge_edge = new HashMap<>();
@@ -39,12 +36,6 @@ public class BellmanFord {
 
 	public BellmanFord() {
 
-	}
-
-	public BellmanFord(Map<GraphNode, List<GraphNode>> node_neighborNodes,
-			Map<GraphEdge, GraphEdge> edge_edge) {
-		this.node_neighborNodes = node_neighborNodes;
-		this.edge_edge = edge_edge;
 	}
 
 	/**
@@ -63,7 +54,6 @@ public class BellmanFord {
 				line = sc.nextLine();
 				strArr = line.split(regex);
 				GraphNode source = new GraphNode(Integer.valueOf(strArr[0]));
-				node_neighborNodes.put(source, new ArrayList<GraphNode>());
 				if (Integer.valueOf(strArr[0]) == 1) { // 源节点
 					shortestDists.put(source, .0);
 				} else {
@@ -82,11 +72,10 @@ public class BellmanFord {
 						edge_edge.put(edge1, edge1);
 						edge_edge.put(edge2, edge2);
 						
-						node_neighborNodes.get(source).add(dest);
-						if(!node_neighborNodes.containsKey(dest)) {
-							node_neighborNodes.put(dest, new ArrayList<GraphNode>());
+						if(!neighborNodes_node.containsKey(dest)) {
+							neighborNodes_node.put(dest, new ArrayList<GraphNode>());
 						}
-						node_neighborNodes.get(dest).add(source);
+						neighborNodes_node.get(dest).add(source);
 					}
 				}
 			}
@@ -105,7 +94,7 @@ public class BellmanFord {
 	 * return 是否包含negative cycle
 	 */
 	public boolean solveBellmanFord() {
-		int numNodes = node_neighborNodes.size();
+		int numNodes = neighborNodes_node.size();
 		double[][] numNodes_node = new double[2][numNodes + 1];
 
 		// 初始化
@@ -123,7 +112,7 @@ public class BellmanFord {
 				double temp = numNodes_node[(i - 1) % 2][j];
 
 				GraphNode node = new GraphNode(j);
-				for (GraphNode nd : node_neighborNodes.get(node)) {
+				for (GraphNode nd : neighborNodes_node.get(node)) {
 					GraphEdge edge = new GraphEdge(nd, node, 0);
 					double ttemp = numNodes_node[(i - 1) % 2][nd.getLabel()]
 							+ edge_edge.get(edge).getWeight();
@@ -143,7 +132,7 @@ public class BellmanFord {
 		}
 
 		// 所有节点到源节点的最短路径
-		for (GraphNode node : node_neighborNodes.keySet()) {
+		for (GraphNode node : neighborNodes_node.keySet()) {
 			shortestDists.put(node,
 					numNodes_node[numNodes % 2][node.getLabel()]);
 		}

@@ -13,8 +13,7 @@ import algorithms.heap.Heap;
 /**
  * Dijkstra提出来的单源最短路径算法，整个算法的时间复杂度为nlog(n)+m，n是
  * 图中节点的个数，m是图中边的数目。使用一个Map来保存每个节点和其邻接节点的信息，使用一个Map
- * 保存图中所有的边权值信息。之所以使用两个Map来保存一个图的信息，完全是为了 算法的可读性。 
- * 核心代码在solveDijkstra函数中，总共不过十来行。
+ * 保存图中所有的边权值信息。核心代码在solveDijkstra函数中，总共不过十来行。
  * 
  * @author moqiguzhu
  * @date 2015-08-10
@@ -68,6 +67,7 @@ public class Dijkstra {
 			if(!node_neighborNodes.containsKey(source)) {
 				node_neighborNodes.put(source, new ArrayList<GraphNode>());
 			}
+			
 			if (Integer.valueOf(strArr[0]) == 1) { 			// 源节点
 				heap.offer(source, .0);
 				shortestDists.put(source, .0);
@@ -82,17 +82,13 @@ public class Dijkstra {
 							.split(regex1)[0]));
 					weight = Double.valueOf(strArr[i].split(regex1)[1]);
 					
-					//无向边
-					GraphEdge edge1 = new GraphEdge(source, dest, weight);
-					GraphEdge edge2 = new GraphEdge(dest, source, weight);
-					edge_edge.put(edge1, edge1);
-					edge_edge.put(edge2, edge2);
-
+					//无向边本来是作两条有向边保存的，但是source，dest对和dest，source对在图文件中都会出现
+					GraphEdge edge = new GraphEdge(source, dest, weight);
+					edge_edge.put(edge, edge);
+					
+					//保留出度信息
 					node_neighborNodes.get(source).add(dest);
-					if(!node_neighborNodes.containsKey(dest)) {
-						node_neighborNodes.put(dest, new ArrayList<GraphNode>());
-					}
-					node_neighborNodes.get(dest).add(source);
+					
 				}
 			}
 		}
@@ -116,7 +112,7 @@ public class Dijkstra {
 			for (GraphNode tnode : node_neighborNodes.get(node)) {
 				GraphEdge tedge = new GraphEdge(node, tnode, 0);
 				double oldDist = shortestDists.get(tnode);
-				// 需要new一个Edge，不优雅
+				// 需要new一个Edge
 				double newDist = shortestDists.get(node)
 						+ edge_edge.get(tedge).getWeight();
 				if (newDist < oldDist) {
