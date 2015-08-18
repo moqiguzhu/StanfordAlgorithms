@@ -11,7 +11,8 @@ import algorithms.graphedge.GraphEdge;
 import algorithms.graphnode.GraphNode;
 
 /**
- * 使用Bellman-Ford算法解决单源最短路径问题。 注意在使用这个类的时候，节点的label要从1到numNodes取值
+ * 使用Bellman-Ford算法解决单源最短路径问题。 注意在使用这个类的时候，节点的label要从1到numNodes取值。
+ * 只适用于无向图。
  * 
  * @author moqiguzhu
  * @date 2015-08-17
@@ -19,14 +20,19 @@ import algorithms.graphnode.GraphNode;
  */
 
 public class BellmanFord {
-	/* 存储结点及其相邻的节点信息 */
+	/* 存储结点及其相邻的节点信息(出度信息) */
 	private Map<GraphNode, List<GraphNode>> node_neighborNodes = new HashMap<>();
+	
+	/* 存储结点及其相邻的节点信息(入度信息)*/
+	private Map<GraphNode, List<GraphNode>> neighborNodes_nodeMap = new HashMap<>();
 
 	/* 存储图的边权值信息 */
 	private Map<GraphEdge, GraphEdge> edge_edge = new HashMap<>();
 
 	/* key为节点到源节点之间的最短距离 */
 	private Map<GraphNode, Double> shortestDists = new HashMap<>();
+	
+	/* 按照节点发现的顺序确定其index*/
 
 	/* 到源节点的初始距离 */
 	private double MAX = Double.MAX_VALUE;
@@ -69,11 +75,18 @@ public class BellmanFord {
 						GraphNode dest = new GraphNode(
 								Integer.valueOf(strArr[i].split(regex1)[0]));
 						weight = Double.valueOf(strArr[i].split(regex1)[1]);
-						GraphEdge edge = new GraphEdge(source, dest, weight);
-
-						edge_edge.put(edge, edge);
-						// 这里也不需要显式保存双向的连接信息
+						
+						//无向边
+						GraphEdge edge1 = new GraphEdge(source, dest, weight);
+						GraphEdge edge2 = new GraphEdge(dest, source, weight);
+						edge_edge.put(edge1, edge1);
+						edge_edge.put(edge2, edge2);
+						
 						node_neighborNodes.get(source).add(dest);
+						if(!node_neighborNodes.containsKey(dest)) {
+							node_neighborNodes.put(dest, new ArrayList<GraphNode>());
+						}
+						node_neighborNodes.get(dest).add(source);
 					}
 				}
 			}

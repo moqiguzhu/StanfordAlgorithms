@@ -72,13 +72,17 @@ public class Main {
 //		System.out.println(ma.getCount());
 //		System.out.println(1000000000 % 142857);
 		
-		System.out.println("This is a test line");
-		System.out.println("This is also a test line");
+//		System.out.println("This is a test line");
+//		System.out.println("This is also a test line");
+//		
+//		int[] x = {1,2,3};
+//		int[] y = x;
+//		y[0] = 100;
+//		System.out.println(Arrays.toString(x));
+//		System.out.println(Arrays.toString(y));
 		
-		int[] x = {1,2,3};
-		int[] y = x;
-		y[0] = 100;
-		System.out.println(Arrays.toString(x));
-		System.out.println(Arrays.toString(y));
+		//传入capacity参数之后，list的size依然是0
+//		List<Integer> list = new ArrayList<Integer>(2);
+//		list.set(1, 1);
 	}
 }
