@@ -39,9 +39,19 @@ Generally speaking, there are two algorithms to solve Single Source Shortest Pat
 ### All Pairs Shortest Path 
 Generally speaking, there are algorithms to solve All Pairs Shortest Path problem, they are Floyd-Warshall and Johnson algorithms.
 
-- Floyd-Warshall algorithm is a DP based problem which has a **$n^3$** time complexity.
+- Floyd-Warshall algorithm is a DP based problem which has a **$n^3$** time complexity. The advantage of Floyd-Warshall is easy to understand and implement.
+
+- Compared with Floyd-Warshall algorithm, Johnson's algorithm has a smaller asympotic time complexity, it's **n^2logn+mn**. It is quite a complicated algorithm and hard to implement. Although it has a smaller asympotic time complexity over Floyd-Warshall algorithm, the test result on **apsp3.txt** shows that it is much slower than Floyd-Warshall algorithm.
+
+## Some tips when implementing graph based algorithms
+- view all the edges as directed edges. one undirected edge can be see as two directed edges with same weight
+- pay much attention to file format when creating graph from file, such as whether this is a directed graph or undirected graph.
+- all the nodes must be considered, especially those nodes which have no input degree or output degree
+
+We can see all the graphs as directed graphs. All the information about a graph including:
+- edge information, including head node and tail node and weight
+- node information, including node label
+- node link information, including all the output degree information and input degree information
 
 ## What to do 
 - StrongConnectedComponent need to debug
-- make Bellman-Ford more general
-- make Dijkstra more general
