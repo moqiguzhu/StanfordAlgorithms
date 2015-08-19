@@ -8,8 +8,8 @@ Happy to make friends here. We can talk codes, sports and everything in life.
 
 ## Algorithms
 ### Rules
-n number of nodes in a grapg
-m number of edges in a graph
+- n means number of nodes in a grapg
+- m means number of edges in a graph
 
 ### KnapSack
 
@@ -45,13 +45,15 @@ Generally speaking, there are algorithms to solve All Pairs Shortest Path proble
 
 ## Some tips when implementing graph based algorithms
 - view all the edges as directed edges. one undirected edge can be see as two directed edges with same weight
-- pay much attention to file format when creating graph from file, such as whether this is a directed graph or undirected graph.
+- pay much attention to file format when creating graph from file, such as whether this is a directed graph or undirected graph. If it is a undirected graph, will one edge appears two times in the file? In one sentence, specify requirements and what data structures that we need.
 - all the nodes must be considered, especially those nodes which have no input degree or output degree
 
 We can see all the graphs as directed graphs. All the information about a graph including:
 - edge information, including head node and tail node and weight
 - node information, including node label
 - node link information, including all the output degree information and input degree information
+
+
 
 ## What to do 
 - StrongConnectedComponent need to debug
