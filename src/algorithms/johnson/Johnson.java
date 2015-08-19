@@ -58,8 +58,14 @@ public class Johnson {
 			while (sc.hasNext()) {
 				line = sc.nextLine();
 				strArr = line.split(regex);
-				GraphNode left = new GraphNode(Integer.valueOf(strArr[1]));
-				GraphNode right = new GraphNode(Integer.valueOf(strArr[0]));
+				
+				//神奇的是，下面两种写法都是可行的
+				GraphNode left = new GraphNode(Integer.valueOf(strArr[0]));
+				GraphNode right = new GraphNode(Integer.valueOf(strArr[1]));
+				
+//				GraphNode left = new GraphNode(Integer.valueOf(strArr[1]));
+//				GraphNode right = new GraphNode(Integer.valueOf(strArr[0]));
+				
 				double weight = Double.valueOf(strArr[2]);
 
 				GraphEdge edge1 = new GraphEdge(left, right, weight);
@@ -254,7 +260,7 @@ public class Johnson {
 	// test this class
 	public static void main(String[] args) {
 		Johnson johnson = new Johnson();
-		String path = ".\\testdata\\apsp2.txt";
+		String path = ".\\testdata\\apsp3.txt";
 
 		long start = System.currentTimeMillis();
 		johnson.createGraphFromFile(path);

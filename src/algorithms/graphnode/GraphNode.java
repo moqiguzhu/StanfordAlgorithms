@@ -58,9 +58,12 @@ public class GraphNode {
 		this.end = end;
 	}
 	
+	public String print() {
+		return "" + label + " " + color + " " + start + " " + end;
+	}
+	
 	@Override
-	public String toString() {
-//		return "" + label + " " + color + " " + start + " " + end; 
+	public String toString() {	 
 		return "" + label;
 	}
 	

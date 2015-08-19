@@ -132,8 +132,8 @@ public class StrongConnectedComponent<E extends GraphNode> {
 			timeLabel = timeLabel + 1;
 			if(tempNode.getStart() == 0L) {
 				tempNode.setStart(timeLabel);
+				tempNode.setColor('g');
 			}
-			tempNode.setColor('g');
 			if(graph.containsKey(tempNode)) {
 				for(E ttNode : graph.get(tempNode)) {
 					if(ttNode.getColor() == 'w' && !stackElements.contains(ttNode)) {
@@ -162,7 +162,7 @@ public class StrongConnectedComponent<E extends GraphNode> {
 		List<Long> ends = new ArrayList<>(end_node.keySet());
 		Collections.sort(ends, Collections.reverseOrder());
 		for(long end : ends) {
-			if(end_node.get(end).getColor() != 'b') {
+			if(end_node.get(end).getColor() == 'w') {
 				strongConnectedComponents.add(DFS_VISIT(end_node.get(end), graphReversed));
 			}
 		}
@@ -179,8 +179,11 @@ public class StrongConnectedComponent<E extends GraphNode> {
 		List<Integer> componentsSize = new ArrayList<Integer>();
 		for(int i = 0; i < components.size(); i++) {
 			componentsSize.add(components.get(i).size());
+			if(components.get(i).size() == 112) {
+				System.out.println(components.get(i));
+			}
 		}
 		Collections.sort(componentsSize, Collections.reverseOrder());
-		System.out.println(componentsSize);
+//		System.out.println(componentsSize);
 	}
 }
