@@ -8,8 +8,8 @@ Happy to make friends here. We can talk codes, sports and everything in life.
 
 ## Algorithms
 ### Rules
-n number of nodes in a grapg
-m number of edges in a graph
+- n means number of nodes in a grapg
+- m means number of edges in a graph
 
 ### KnapSack
 
