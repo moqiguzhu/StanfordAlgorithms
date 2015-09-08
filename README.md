@@ -46,6 +46,10 @@ Generally speaking, there are algorithms to solve All Pairs Shortest Path proble
 ### Strong Connected Components
 Strong Connected Components is an application of DFS. It is can be with recursive or without recursive. Recursive implementation will consume so much memory space but easy to implement. No recursive implementation will save a lot space and time, however, it is hard to implement and debug.
 
+### Travelling Salesman Problem
+TSP is to find the shortest Hanmilton cycle given some cities and distances between them. This is a NPC problem. There is a Dynamic Programming algorithm which can always find the optimal answer, however, time complexity is **n^22^n**.
+
+
 ## Some tips when implementing graph based algorithms
 - view all the edges as directed edges. one undirected edge can be see as two directed edges with same weight
 - pay much attention to file format when creating graph from file, such as whether this is a directed graph or undirected graph. If it is a undirected graph, will one edge appears two times in the file? In one sentence, specify requirements and what data structures that we need.
