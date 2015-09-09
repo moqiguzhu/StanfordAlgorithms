@@ -62,6 +62,11 @@ Minimum Cut is a random algorithm. The core idea is that every time we choose tw
 ## Test Data
 - all the test data are placed in the **testdata** directory
 
+## About Source codes
+- Codes under Part1 folder are corresponding codes for Stanford Algorithms, Part I
+- Codes under Part2 folder are corresponding codes for Stanford Algorithms, Part II
+- Codes under algorithms folder are refactored codes for Part I and Part II. Generally speaking, these codes are more readable and efficient. But, there are still exceptions that refactored codes run less quickly. This is the result of trade-off between generality and efficience.
+
 ## Time Complexity Rules
 - n means number of nodes in a grapg
 - m means number of edges in a graph
