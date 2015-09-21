@@ -109,6 +109,7 @@ public class JobSchedule {
 			curCompletion += (weights[i] / ratios[i]); 
 			cost += weights[i] * curCompletion;
 		}
+		
 		return cost;
 	}
 

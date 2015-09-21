@@ -141,6 +141,7 @@ public class Dijkstra {
 		int[] test = {7,37,59,82,99,115,133,165,188,197};
 //		for(int x : test)
 //			System.out.print(dij.result.get(x) + ",");
+		
 		System.out.print(dij.result.toString());
 	}
 }
