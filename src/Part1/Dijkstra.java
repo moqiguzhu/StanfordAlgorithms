@@ -142,6 +142,7 @@ public class Dijkstra {
 //		for(int x : test)
 //			System.out.print(dij.result.get(x) + ",");
 		
+		
 		System.out.print(dij.result.toString());
 	}
 }
