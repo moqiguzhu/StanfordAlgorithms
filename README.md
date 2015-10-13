@@ -15,7 +15,7 @@ Two methods have been used to solve the KnapSack problem. One is the traditional
 ### Minimum Spanning Tree 
 Generally speaking, there are two algorithms solving Minimum Spanning Tree(MST) problem, they are Kruskal and Prim algorithms. Both algorithms adopt greedy strategies and can ensure to give the global optimal result.
 
-- Prim's MST algorithm is much like the Dijkstra Single Source Shortest Path problem. Both Prim and Dijkstra algorithms need to use a priority queue to boost. Minimum Cut law ensures that correctness of these two algorithms.
+- Prim's MST algorithm is much like the Dijkstra Single Source Shortest Path problem. Both Prim and Dijkstra algorithms need to use a priority queue to boost. Minimum Cut law ensures the correctness of these two algorithms.
 
 - Kruskal's Minimum algorithm need to use a data structure called Union-Find to boost. Kruskal algorithm need to store all the edges of graph and then sort them. So the time complexity is **mlogm**. For more information about Union-Find, please refer to **Algorithms** by `Sedgewick`.
 
