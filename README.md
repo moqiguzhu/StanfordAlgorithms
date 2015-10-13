@@ -49,7 +49,7 @@ Strong Connected Components is an application of DFS. It is can be with recursiv
 Job Schedule problem asks us to compute the minimal weighted completion time of all jobs. This is a typical greedy problem and there are some different greedy strategies for the problem. Among these strategies, there is only one which can maintain that the answer is optimal. First we compute all the ratios between weight and length of every job, then sort jobs according to their ratios from high to low. This order will produce the optimal result. The proof is trival.
 
 ### Median Maintenance
-We can see the data for this problem is a stream and matain two queues which one stores low half data and the other stores high half data. If we can always maintain this property when the new element is coming, then we can get the current median quickly.
+We can view the data for this problem as a stream data. The idea is to matain two queues which one stores low half data and the other stores high half data. If we can always maintain this property when the new element is coming, then we can get the current median quickly.
 
 Median Maintenance is equivalent to another problem:
 > Suppose we have a stream data which we have no idea about length of data. we need to compute the median of current data when a new element is coming.
