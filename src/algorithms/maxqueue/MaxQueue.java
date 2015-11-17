@@ -54,9 +54,11 @@ public class MaxQueue<T> {
         maxStack1.clear();
 
         maxStack2.clear();
-        for (int i = tmp.size() - 1; i >= 0; i--) {
-          maxStack2.push(tmp.get(i));
+        ListIterator<T> li = tmp.listIterator(tmp.size());
+        while(li.hasPrevious()) {
+          maxStack2.push(li.previous());
         }
+        
         return maxStack2.peek();
       }
     } else {
@@ -73,9 +75,11 @@ public class MaxQueue<T> {
         maxStack1.clear();
 
         maxStack2.clear();
-        for (int i = tmp.size() - 1; i >= 0; i--) {
-          maxStack2.push(tmp.get(i));
+        ListIterator<T> li = tmp.listIterator(tmp.size());
+        while(li.hasPrevious()) {
+          maxStack2.push(li.previous());
         }
+        
         return maxStack2.pop();
       }
     } else {
