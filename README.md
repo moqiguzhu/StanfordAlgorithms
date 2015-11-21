@@ -59,6 +59,13 @@ We can connect Median Maintenance to Reservoir sampling problem, for more detail
 ### Minimum Cut
 Minimum Cut is a random algorithm. The core idea is that every time we choose two nodes randomly and tract them until there are only two nodes left. The chance that this random process find the minimum cut is **1/n**. When **n=100**, the chance that we run the process once and find minimum cut is 1/100, which is relative low. However, if we run the process 1000 times, then the chance we could not find correct answer is **(99/100)^1000** which less than 0.0001. That's to say, we have a really high probability to find the correct answer. This algorithm was published by David Karger in 1993. For more detailed information, please refer to [Karger's algorithm](https://en.wikipedia.org/wiki/Karger%27s_algorithm)
 
+## Max Stack and Max Queue
+The difference between Max Stack and normal Stack is that we can get the max element of Max Stack in O(1) time. How can we do this? We use two normal Stacks to implement a Max Stack. One behaves like a normal Stack, another stores  the max element from bottom of normal Stack to the current element. With this manner, we can get the max element in O(1) time.
+
+The difference between Max Queue and normal Queue is that we can get the max element of Max Queue in O(1) time. How can we do this? We can use two Max Stacks to implement a Max Queue, just like we can monitor a Queue use two Stacks, we can use two Max Stacks to implement a Max Queue. The amortized time of every operation of Max Queue is O(1). 
+
+There is another solution for Max Queue implementation(more complicated), for more detailed information, please refer to[Deng's method](http://dsa.cs.tsinghua.edu.cn/~deng/ds)
+
 ## Test Data
 - all the test data are placed in the **testdata** directory
 
