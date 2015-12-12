@@ -22,7 +22,11 @@ public class MedianMaintenance {
 	public int solveMedianMaintenance(String path) {
 		Scanner sc = null;
 		//low half是个大顶堆
-		PriorityQueue<Double> lowHalf = new PriorityQueue<>(Collections.reverseOrder());
+		
+		//下面这种新建优先队列的方法是JDK8新加的，也应该这么做
+		//PriorityQueue<Double> lowHalf = new PriorityQueue<>(0,Collections.reverseOrder());
+		
+		PriorityQueue<Double> lowHalf = new PriorityQueue<>(0,Collections.reverseOrder());
 		//high half是个小顶堆
 		PriorityQueue<Double> highHalf = new PriorityQueue<>();
 		long medSum = 0;
