@@ -3,6 +3,12 @@ package algorithms.doublelinkedlist;
 // **************************** DLLNode.java *******************************
 // node of generic doubly linked list class
 
+/**
+ * http://www.mathcs.duq.edu/drozdek/DSinJava/DLLNode.java
+ * 
+ * @author Adam Drozdek
+ */
+
 public class DLLNode<T> {
   public T info;
   public DLLNode<T> next, prev;
@@ -23,7 +29,7 @@ public class DLLNode<T> {
     next = n;
     prev = p;
   }
-  
+
   @Override
   public String toString() {
     return "" + info;

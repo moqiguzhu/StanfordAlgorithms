@@ -3,7 +3,13 @@ package algorithms.doublelinkedlist;
 import java.util.HashMap;
 import java.util.Map;
 
-//!!! 
+/**
+ * LRU cahce Java implementation
+ * 
+ * @author moqiguzhu
+ * @date 2015-12-28
+ * @version 1.0
+ */
 public class LRUCache {
   private Map<Integer, DLLNode<CacheNode>> key_node;
   private DLL<CacheNode> nodes;
@@ -16,12 +22,13 @@ public class LRUCache {
   }
 
   public int get(int key) {
+    int result = -1;
     if (key_node.containsKey(key)) {
       nodes.removeToHead(key_node.get(key));
-      return key_node.get(key).info.value;
-    } else {
-      return -1;
+      result = key_node.get(key).info.value;
     }
+    
+    return result;
   }
 
   public void set(int key, int value) {
@@ -32,32 +39,84 @@ public class LRUCache {
     } else {
       if (maxSize == key_node.size()) {
         leastUsedKey = nodes.deleteFromTail().key;
-        nodes.addToHead(new CacheNode(key, value));
         key_node.remove(leastUsedKey);
-      } else {
-        nodes.addToHead(new CacheNode(key, value));
       }
+      nodes.addToHead(new CacheNode(key, value));
     }
     key_node.put(key, nodes.head);
   }
-  
+
   public void print() {
-    System.out.println("cache content: " + key_node.toString());
+    nodes.printAll();
+    System.out.println();
   }
 
   // test LRUCache
   public static void main(String[] args) {
-    LRUCache lruc = new LRUCache(2);
-    
-    lruc.set(2, 1);
-    lruc.print();
-    
-    lruc.set(1, 1);
-    lruc.print();
-    
+    LRUCache lruc = new LRUCache(10);
+
+    lruc.set(10, 13);
+    lruc.set(3, 17);
+    lruc.set(6, 11);
+    lruc.set(10, 5);
+    lruc.set(9, 10);
+    lruc.get(13);
+    lruc.set(2, 19);
     lruc.get(2);
+    lruc.get(3);
+    lruc.set(5, 25);
+    lruc.get(8);
+    lruc.set(9, 22);
+    lruc.set(5, 5);
+    lruc.set(1, 30);
+    lruc.get(11);
+    lruc.set(9, 12);
+    lruc.get(7);
+    lruc.get(5);
+    lruc.get(8);
+    lruc.get(9);
+    lruc.set(4, 30);
+    lruc.set(9, 3);
+    lruc.get(9);
+    lruc.get(10);
+    lruc.get(10);
+    lruc.set(6, 14);
+    lruc.set(3, 1);
+    lruc.get(3);
+    lruc.set(10, 11);
+    lruc.get(8);
+    lruc.set(2, 14);
+    lruc.get(1);
+    lruc.get(5);
+    lruc.get(4);
+    lruc.set(11, 4);
+    lruc.set(12, 24);
+    lruc.set(5, 18);
+    lruc.get(13);
+    lruc.set(7, 23);
+    lruc.get(8);
+    lruc.get(12);
+    lruc.set(3, 27);
+    lruc.set(2, 12);
+    lruc.get(5);
+    lruc.set(2, 9);
+    lruc.set(13, 4);
+    lruc.set(8, 18);
+    lruc.set(1, 7);
+    lruc.get(6);
+    lruc.set(9, 29);
+    lruc.set(8, 21);
+    lruc.get(5);
+    lruc.set(6, 30);
+    lruc.set(1, 12);
+    lruc.get(10);
+    lruc.set(4, 15);
+    lruc.set(7, 22);
+    lruc.set(11, 26);
+    lruc.set(9, 29);
+    lruc.get(5);
     
-    lruc.set(4, 1);
-    lruc.print();
+    // answer should be:
+    // -1 19 17 -1 -1 -1 5 -1 12 3 5 5 1 -1 30 5 30 -1 -1 24 18 -1 18 -1 18
   }
 }

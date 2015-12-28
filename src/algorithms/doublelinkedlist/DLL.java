@@ -3,6 +3,12 @@ package algorithms.doublelinkedlist;
 // **************************** DLL.java *******************************
 // generic doubly linked list class
 
+/**
+ * http://www.mathcs.duq.edu/drozdek/DSinJava/DLL.java
+ * 
+ * @author Adam Drozdek
+ */
+
 public class DLL<T> {
   public DLLNode<T> head, tail;
 
@@ -80,18 +86,25 @@ public class DLL<T> {
     else
       return tmp.info;
   }
-  
+
   // node must lies in this DLL
   public void removeToHead(DLLNode<T> node) {
-    if(head == tail || node == head)
+    // 注意这里使用的是==
+    if (head == tail || node == head)
       return;
-    
+
     node.prev.next = node.next;
-    
-    if(node.next != null)
+
+    if (node.next != null)
       node.next.prev = node.prev;
     else
       tail = node.prev;
-    addToHead(node.info);
+
+    // 不能使用下面这行代码 值与地址
+    // addToHead(node.info);
+    node.next = head;
+    node.prev = null;
+    head.prev = node;
+    head = node;
   }
 }
