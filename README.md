@@ -24,22 +24,24 @@ Generally speaking, there are two algorithms solving Minimum Spanning Tree(MST) 
 ### Single Path Shortest Path
 Generally speaking, there are two algorithms to solve Single Source Shortest Path problem(SSSP), they are Dijkstra algorithm and Bellman-Ford algorithm.
 
-- Dijkstra algorithm is much similar to Prim's MST algorithm, both need a heap to boost. The time complexity of Dijkstra algorithm is **nlogn+m**. Dijkstra algorithm suppose that there is no negative cycle in the graph, in those cases SSSP problem is undefined. Dijkstra's algorithm is indispensable for Johnson's algorithm. For more detailed information, please refer to [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
+- Dijkstra algorithm is much similar to Prim's MST algorithm, both need a heap to boost. The time complexity of Dijkstra algorithm is **nlogn+m**. Dijkstra algorithm suppose that there is no negative edge in the graph. Dijkstra's algorithm is indispensable for Johnson's algorithm. For more detailed information, please refer to [Dijkstra](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm)
 
 - Different from Dijkstra's algorithm, Bellman and Ford proposed a new DP based algorithm to solve SSSP problem. There are two advantages when compared with Dijkstra algorithm. One is that Bellman-Ford algorithm is easier to understand and implement, the other is that Bellman-Ford algorithm can detect whether existing a negative cycle in a graph while Dijkstra's algorithm can not. Unfortunately, the time complexity of Bellman-Ford algorithm is **mn**. The test result on **Dijkstra.txt** shows that Dijkstra's algorithm is about 10 times faster than Bellman-Ford algorithm. For more detailed information, please refer to [Bellman-Forman](https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm)
 
 ### All Pairs Shortest Path 
-Generally speaking, there are algorithms to solve All Pairs Shortest Path problem, they are Floyd-Warshall and Johnson algorithms.
+Generally speaking, there are two algorithms to solve All Pairs Shortest Path problem, they are Floyd-Warshall and Johnson algorithms.
 
-- Floyd-Warshall algorithm is a DP based problem which has a **$n^3$** time complexity. The advantage of Floyd-Warshall is easy to understand and implement.
+- Floyd-Warshall algorithm is a DP based problem which has a **n^3** time complexity. The advantage of Floyd-Warshall is easy to understand and implement.
 
 - Compared with Floyd-Warshall algorithm, Johnson's algorithm has a smaller asympotic time complexity, it's **n^2logn+mn**. It is quite a complicated algorithm and hard to implement. Although it has a smaller asympotic time complexity over Floyd-Warshall algorithm, the test result on **apsp3.txt** shows that it is much slower than Floyd-Warshall algorithm.
 
 ### Strong Connected Components
-Strong Connected Components is an application of DFS. It is can be with recursive or without recursive. Recursive implementation will consume so much memory space but easy to implement. No recursive implementation will save a lot space and time, however, it is hard to implement and debug.
+Strong Connected Components is an application of DFS. It is can be recursive or iterative. Recursive implementation will consume so much memory space but easy to implement. Iterative implementation will save a lot space and time, however, it is hard to implement and debug.
 
 ### Travelling Salesman Problem
 - TSP is to find the shortest Hanmilton cycle given some cities and distances between them. This is a NPC problem. There is a Dynamic Programming algorithm which can always find the optimal answer, however, time complexity is **n^22^n**.
+
+- A greedy strategy has been adopted to build initial valid Hamilton cycle, then two algorithms called **2-opt** and **3-opt** have been used to improve initial cycle. Experiment shows that this kind of stratey can work quite well when graph is not so much big.
 
 - More real TSP data, please refer to [National_TSP](http://www.math.uwaterloo.ca/tsp/world/countries.html)
 
@@ -57,14 +59,14 @@ Median Maintenance is equivalent to another problem:
 We can connect Median Maintenance to Reservoir sampling problem, for more detailed information, please refer to [Reservoir_sampling](https://en.wikipedia.org/wiki/Reservoir_sampling)
 
 ### Minimum Cut
-Minimum Cut is a random algorithm. The core idea is that every time we choose two nodes randomly and tract them until there are only two nodes left. The chance that this random process find the minimum cut is **1/n**. When **n=100**, the chance that we run the process once and find minimum cut is 1/100, which is relative low. However, if we run the process 1000 times, then the chance we could not find correct answer is **(99/100)^1000** which less than 0.0001. That's to say, we have a really high probability to find the correct answer. This algorithm was published by David Karger in 1993. For more detailed information, please refer to [Karger's algorithm](https://en.wikipedia.org/wiki/Karger%27s_algorithm)
+Minimum Cut is a random algorithm. The core idea is that every time we choose two nodes randomly and tract them until there are only two nodes left. The chance that this random process find the minimum cut is **1/n**. When **n=100**, the chance that we run the process once and find minimum cut is 1/100, which is relative low. However, if we run the process 1000 times, then the chance we **could not** find correct answer is **(99/100)^1000** which less than 0.0001. That's to say, we have a really high probability to find the correct answer. This algorithm was published by David Karger in 1993. For more detailed information, please refer to [Karger's algorithm](https://en.wikipedia.org/wiki/Karger%27s_algorithm)
 
 ## Max Stack and Max Queue
-The difference between Max Stack and normal Stack is that we can get the max element of Max Stack in O(1) time. How can we do this? We use two normal Stacks to implement a Max Stack. One behaves like a normal Stack, another stores  the max element from bottom of normal Stack to the current element. With this manner, we can get the max element in O(1) time.
+The difference between Max Stack and normal Stack is that we can get the max element of Max Stack in O(1) time. How can we do this? We use two normal Stacks to implement a Max Stack. One behaves like a normal Stack, another stores the max element from bottom of normal Stack to the current element. With this manner, we can get the max element in O(1) time.
 
 The difference between Max Queue and normal Queue is that we can get the max element of Max Queue in O(1) time. How can we do this? We can use two Max Stacks to implement a Max Queue, just like we can monitor a Queue use two Stacks, we can use two Max Stacks to implement a Max Queue. The amortized time of every operation of Max Queue is O(1). 
 
-There is another solution for Max Queue implementation(more complicated), for more detailed information, please refer to[Deng's method](http://dsa.cs.tsinghua.edu.cn/~deng/ds)
+There is another solution for Max Queue implementation(more complicated), for more detailed information, please refer to [Deng's method](http://dsa.cs.tsinghua.edu.cn/~deng/ds)
 
 ## Test Data
 - all the test data are placed in the **testdata** directory
@@ -72,10 +74,10 @@ There is another solution for Max Queue implementation(more complicated), for mo
 ## About Source codes
 - Codes under Part1 folder are corresponding codes for Stanford Algorithms, Part I
 - Codes under Part2 folder are corresponding codes for Stanford Algorithms, Part II
-- Codes under algorithms folder are refactored codes for Part I and Part II. Generally speaking, these codes are more readable and efficient. But, there are still exceptions that refactored codes run less quickly. This is the result of trade-off between generality and efficience.
+- Codes under algorithms folder are refactored codes from Part I and Part II. Generally speaking, these codes are more readable and efficient. But, there are still exceptions that refactored codes run less quickly. This is the result of trade-off between generality and efficiency.
 
 ## Time Complexity Rules
-- n means number of nodes in a grapg
+- n means number of nodes in a graph
 - m means number of edges in a graph
 
 ## Some tips when implementing graph based algorithms
@@ -85,7 +87,7 @@ There is another solution for Max Queue implementation(more complicated), for mo
 
 - all the nodes must be considered, especially those nodes which have no input degree or output degree
 
--We can see all the graphs as directed graphs. All the information about a graph including:
+- We can see all the graphs as directed graphs. All the information about a graph including:
   - edge information, including head node and tail node and weight
   - node information, including node label
   - node link information, including all the output degree information and input degree information
