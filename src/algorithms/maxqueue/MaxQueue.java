@@ -124,7 +124,13 @@ public class MaxQueue<T> {
     System.out.println(maxQueue.getMax()); // should be 4
     
     // test min queue
-    MaxQueue<Integer> minQueue = new MaxQueue<>(Collections.reverseOrder());
+    MaxQueue<Integer> minQueue = new MaxQueue<Integer>();
+    
+    // 这种写法不科学 
+    // Collections.reverseOrder()返回的是Comparator<T>
+    // 用作参数的话只能传递给一个泛型方法
+    // MaxQueue<Integer> minQueue = new MaxQueue<Integer>(Collections.reverseOrder());
+    
     System.out.println("test min queue");
     minQueue.offer(2);
     minQueue.offer(1);

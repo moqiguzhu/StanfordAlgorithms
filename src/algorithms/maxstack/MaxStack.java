@@ -1,6 +1,7 @@
 package algorithms.maxstack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -28,7 +29,7 @@ public class MaxStack<T> {
 
   // 注意这里并没有使用父类的构造函数
   public MaxStack(Comparator<T> comp) {
-    comparator = (Comparator<T>) comp;
+    comparator = comp;
     elements = new LinkedList<>();
     maxPrecursor = new LinkedList<>();
   }
@@ -174,7 +175,8 @@ public class MaxStack<T> {
 
     // test min stack
     System.out.println("test min stack:");
-    MaxStack<Double> minStack = new MaxStack<>(Collections.reverseOrder());
+    // 设计不合理
+    MaxStack<Double> minStack = new MaxStack<>();
     minStack.push(2.0);
     System.out.println(minStack.getMax()); // should be 2.0
     minStack.push(1.0);
@@ -183,5 +185,11 @@ public class MaxStack<T> {
     System.out.println(minStack.getMax()); // should be -1.0
     System.out.println(minStack.pop()); // should be -1.0
     System.out.println(minStack.getMax()); // should be 1.0
+    
+    
+    // Test
+    // 为什么这样可以？？？
+    List<Integer> list = new ArrayList<>();
+    Collections.sort(list, Collections.reverseOrder());
   }
 }

@@ -49,6 +49,7 @@ public class Johnson {
 
 	public void createGraphFromFile(String path) {
 		Scanner sc = null;
+		File f = new File(path);
 		try {
 			sc = new Scanner(new File(path));
 			String regex = "\\s";
@@ -127,6 +128,7 @@ public class Johnson {
 		
 		for (GraphNode node : nodes) {
 			Heap<GraphNode, Double> t_heap = new Heap<GraphNode, Double>(new ArrayList<GraphNode>(nodes), keys);
+			System.out.println(keys);
 			t_heap.setKey(node, .0);
 			Map<GraphEdge, GraphEdge> t_edge_edge = new HashMap<>();
 			
