@@ -19,7 +19,7 @@ public class KMP {
     int k = 0;
     for (int i = 0; i < target.length(); i++) {
       while (k > 0 && pattern.charAt(k) != target.charAt(i)) {
-        k = prefixes[k];
+        k = prefixes[k-1];
       }
       if (pattern.charAt(k) == target.charAt(i)) {
         k++;
